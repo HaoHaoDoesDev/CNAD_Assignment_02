@@ -1,0 +1,14 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Specific binary names
+main
+api
+backend_app
+
+# Environment files
+.env

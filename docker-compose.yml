@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: flatmate_db
+    restart: always
+    environment:
+      POSTGRES_USER: dev_user
+      POSTGRES_PASSWORD: dev_password
+      POSTGRES_DB: flatmate_app
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
+  api:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: flatmate_api
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_URL=postgres://dev_user:dev_password@db:5432/flatmate_app?sslmode=disable
+      - PORT=8080
+    depends_on:
+      - db
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8081:8080"
+
+volumes:
+  pgdata:
