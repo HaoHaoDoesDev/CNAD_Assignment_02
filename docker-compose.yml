@@ -14,7 +14,19 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
-
+  api:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: flatmate_api
+    restart: on-failure
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_URL=postgres://dev_user:dev_password@db:5432/flatmate_app?sslmode=disable
+      - PORT=8080
+    depends_on:
+      - db
   adminer:
     image: adminer
     restart: always
