@@ -6,9 +6,9 @@
 *.dylib
 
 # Specific binary names
-main
-api
-backend_app
+/backend/main
+/backend/api
+/backend/backend_app
 
 # Environment files
 .env
