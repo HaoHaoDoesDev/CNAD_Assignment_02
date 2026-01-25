@@ -1,32 +1,41 @@
 import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
-import { Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
-import "react-native-reanimated";
+  Stack,
+  useRootNavigationState,
+  useRouter,
+  useSegments,
+} from "expo-router";
+import { useEffect, useState } from "react";
 import "../global.css";
-
-import { useColorScheme } from "@/hooks/use-color-scheme";
-
-export const unstable_settings = {
-  anchor: "(tabs)",
-};
+import { useAuthStore } from "../store/useAuthStore";
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  const segments = useSegments();
+  const router = useRouter();
+  const navigationState = useRootNavigationState();
+  const [isReady, setIsReady] = useState(false);
 
-  return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="modal"
-          options={{ presentation: "modal", title: "Modal" }}
-        />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
-  );
+  useEffect(() => {
+    if (!navigationState?.key) return;
+
+    const timeout = setTimeout(() => {
+      setIsReady(true);
+    }, 1);
+
+    return () => clearTimeout(timeout);
+  }, [navigationState?.key]);
+
+  useEffect(() => {
+    if (!isReady || !navigationState?.key) return;
+
+    const inAuthGroup = (segments as string[]).includes("(auth)");
+
+    if (!isLoggedIn && !inAuthGroup) {
+      router.replace("/");
+    } else if (isLoggedIn && inAuthGroup) {
+      router.replace("/(tabs)");
+    }
+  }, [isLoggedIn, segments, isReady, router, navigationState?.key]);
+
+  return <Stack screenOptions={{ headerShown: false }} />;
 }
