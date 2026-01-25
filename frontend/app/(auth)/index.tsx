@@ -1,4 +1,4 @@
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
 
 export default function StartupPage() {
