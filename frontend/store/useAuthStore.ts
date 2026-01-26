@@ -21,7 +21,7 @@ export const useAuthStore = create<AuthState>()(
       
       logout: () => set({ 
         isLoggedIn: false, 
-        hasFinishedOnboarding: false
+        hasFinishedOnboarding: false // Note To Junhao: Remove this after login works
       }),
 
       completeOnboarding: () => set({ hasFinishedOnboarding: true }),
