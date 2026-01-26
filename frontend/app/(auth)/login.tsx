@@ -21,7 +21,7 @@ export default function LoginPage() {
       <TextInput
         placeholder="Enter NRIC.."
         placeholderTextColor="#71717a"
-        className="bg-zinc-900 text-white p-4 rounded-xl"
+        className="bg-zinc-900 text-white p-4 rounded-xl border-2 border-white"
       />
       <Text className="text-white text-base font-bold pb-2 pt-2">
         Password:
@@ -30,7 +30,7 @@ export default function LoginPage() {
         placeholder="Enter password..."
         secureTextEntry
         placeholderTextColor="#71717a"
-        className="bg-zinc-900 text-white p-4 rounded-xl mb-8"
+        className="bg-zinc-900 text-white p-4 rounded-xl mb-8 border-2 border-white"
       />
 
       <TouchableOpacity
