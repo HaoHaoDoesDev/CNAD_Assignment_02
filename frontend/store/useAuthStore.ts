@@ -4,16 +4,34 @@ import { createJSONStorage, persist } from "zustand/middleware";
 
 interface AuthState {
   isLoggedIn: boolean;
+  hasFinishedOnboarding: boolean;
   login: () => void;
   logout: () => void;
+  completeOnboarding: () => void;
+  resetOnboarding: () => void;
 }
 
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
       isLoggedIn: false,
+      hasFinishedOnboarding: false,
+
       login: () => set({ isLoggedIn: true }),
-      logout: () => set({ isLoggedIn: false }),
+      
+      logout: () => set({ 
+        isLoggedIn: false, 
+        hasFinishedOnboarding: false // Note To Junhao: Remove this after login works
+      }),
+
+      completeOnboarding: () => set({ hasFinishedOnboarding: true }),
+
+      resetOnboarding: () => set({ hasFinishedOnboarding: false }),
+
+      resetAppState: () => set({ 
+        isLoggedIn: false, 
+        hasFinishedOnboarding: false 
+      }),
     }),
     {
       name: "auth-storage",
