@@ -23,7 +23,10 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - DB_URL=postgres://dev_user:dev_password@db:5432/flatmate_app?sslmode=disable
+      # - DB_URL=postgres://dev_user:dev_password@db:5432/flatmate_app?sslmode=disable
+      - SUPABASE_URL=https://khyikcyybqkdiszzqipl.supabase.co
+      - SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtoeWlrY3l5YnFrZGlzenpxaXBsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk2MTAzNzIsImV4cCI6MjA4NTE4NjM3Mn0.CQJcaAjLnUPburrMGpMyQaf4ZX7B9rdDa4mBd3yOH54
+      - SUPABASE_SERVICE_ROLE_KEY=sb_secret_bk1gVuBwpaJJGML6U-Mzqw_-qgGu0C9
       - PORT=8080
     depends_on:
       - db
